@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody playerRigidbody;
 
+    public const float MAXSPEED = 10f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,21 +19,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("w"))
-        {
-            playerRigidbody.AddForce(new Vector3(0, 0, 100f));
-        }
-        if (Input.GetKeyDown("d"))
-        {
-            playerRigidbody.AddForce(new Vector3(100f, 0, 0));
-        }
-        if (Input.GetKeyDown("s"))
-        {
-            playerRigidbody.AddForce(new Vector3(0, 0, -100f));
-        }
-        if (Input.GetKeyDown("a"))
-        {
-            playerRigidbody.AddForce(new Vector3(-100f, 0, 100f));
-        }
+        // Apply force according to which axis are being pressed (WASD). Clamp the speed to MAXSPEED.
+        playerRigidbody.AddForce(new Vector3(
+            Mathf.Clamp(Input.GetAxis("Horizontal")*MAXSPEED, -MAXSPEED, MAXSPEED), 
+            0, 
+            Mathf.Clamp(Input.GetAxis("Vertical")*MAXSPEED, -MAXSPEED, MAXSPEED)));
     }
 }
