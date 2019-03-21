@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(Input.GetAxis("Horizontal")*MAXSPEED, -MAXSPEED, MAXSPEED), 
             0, 
             Mathf.Clamp(Input.GetAxis("Vertical")*MAXSPEED, -MAXSPEED, MAXSPEED)));
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit(); //quits the game if the player presses ESC
+        }
     }
 
     //Called when the playe collides with visionCCTV
@@ -37,6 +42,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You have been spotted!");
             Destroy(playerRigidbody.gameObject); //destroys the player character
+            Application.Quit(); //quits the game
+
         }
     }
 }
