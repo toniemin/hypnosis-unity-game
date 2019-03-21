@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
 
     public const float MAXSPEED = 10f;
 
+    public GameObject visionCCTV; //GameObject of CCTV's vision
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("");
     }
 
     // Update is called once per frame
@@ -24,5 +26,17 @@ public class PlayerController : MonoBehaviour
             Mathf.Clamp(Input.GetAxis("Horizontal")*MAXSPEED, -MAXSPEED, MAXSPEED), 
             0, 
             Mathf.Clamp(Input.GetAxis("Vertical")*MAXSPEED, -MAXSPEED, MAXSPEED)));
+    }
+
+    //Called when the playe collides with visionCCTV
+    void OnCollisionEnter(Collision col)
+    {
+        //Debug.Log("Collision");
+
+        if (col.gameObject == visionCCTV)
+        {
+            Debug.Log("You have been spotted!");
+            Destroy(playerRigidbody.gameObject); //destroys the player character
+        }
     }
 }
