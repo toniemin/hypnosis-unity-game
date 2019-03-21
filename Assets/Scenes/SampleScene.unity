@@ -307,8 +307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionCCTV: {fileID: 858671511}
-  player: {fileID: 624711440}
-  playerRigidbody: {fileID: 624711447}
+  player: {fileID: 1059004787}
+  playerRigidbody: {fileID: 1059004789}
 --- !u!1 &567956077
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRigidbody: {fileID: 1059004789}
-  visionCCTV: {fileID: 567956077}
+  visionCCTV: {fileID: 858671511}
 --- !u!54 &1059004789
 Rigidbody:
   m_ObjectHideFlags: 0
