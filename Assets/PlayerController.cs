@@ -5,12 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public Rigidbody playerRigidbody;
+    private Rigidbody playerRigidbody;
 
-    public const float MAXSPEED = 10f;
+    public float maxSpeed = 10f;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
 
+    void Awake()
+    {
+        playerRigidbody = GetComponent<Rigidbody>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +25,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Apply force according to which axis are being pressed (WASD). Clamp the speed to MAXSPEED.
-        playerRigidbody.AddForce(new Vector3(
-            Mathf.Clamp(Input.GetAxis("Horizontal")*MAXSPEED, -MAXSPEED, MAXSPEED), 
-            0, 
-            Mathf.Clamp(Input.GetAxis("Vertical")*MAXSPEED, -MAXSPEED, MAXSPEED)));
+        // Read movement direction from the keyboard using Input.GetAxis
+        // and apply speed to it.
+        Vector3 direction = new Vector3(
+            Input.GetAxis("Horizontal") * maxSpeed * Time.deltaTime,
+            0,
+            Input.GetAxis("Vertical")* maxSpeed * Time.deltaTime
+        );
+
+        // Move player to new positon.
+        playerRigidbody.MovePosition(transform.position + direction);
 
         if (Input.GetKey("escape"))
         {
@@ -41,7 +50,7 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject == visionCCTV)
         {
             Debug.Log("You have been spotted!");
-            Destroy(playerRigidbody.gameObject); //destroys the player character
+            Destroy(gameObject); //destroys the player character
             Application.Quit(); //quits the game
 
         }
