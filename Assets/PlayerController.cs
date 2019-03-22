@@ -5,15 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    private Rigidbody playerRigidbody;
+    private Rigidbody rb;
 
-    public float maxSpeed = 10f;
+    public float movementSpeed = 10f;
+    public float rotationSpeed = 10f;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
 
     void Awake()
     {
-        playerRigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -28,13 +29,19 @@ public class PlayerController : MonoBehaviour
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
         Vector3 direction = new Vector3(
-            Input.GetAxis("Horizontal") * maxSpeed * Time.deltaTime,
+            Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime,
             0,
-            Input.GetAxis("Vertical")* maxSpeed * Time.deltaTime
+            Input.GetAxis("Vertical")* movementSpeed * Time.deltaTime
         );
 
         // Move player to new positon.
-        playerRigidbody.MovePosition(transform.position + direction);
+        rb.MovePosition(transform.position + direction);
+
+        // Rotate the player to the movement direction.
+        //Quaternion rotation = Quaternion.Euler(0f, rb.rotation.y + Input.GetAxis("Horizontal")*1000f*Time.deltaTime, 0f);
+        //rb.MoveRotation(rotation);
+        //Quaternion rotation = Input.GetAxisRaw("Horizontal");
+        rb.MoveRotation(Quaternion.Euler(0f, 1f, 0f));
 
         if (Input.GetKey("escape"))
         {
