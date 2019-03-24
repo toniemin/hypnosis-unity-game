@@ -17,10 +17,11 @@ public class SpinnerScript : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-
-        Vector3 rot = new Vector3(h, 0, v);
-
-        rb.MoveRotation(Quaternion.LookRotation(rot));
+        if (h != 0 || v != 0)
+        {
+            Vector3 rot = new Vector3(h, 0, v);
+            rb.MoveRotation(Quaternion.LookRotation(rot));
+        }
     }
 
     // Update is called once per frame

@@ -30,16 +30,22 @@ public class PlayerController : MonoBehaviour
 
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
+        float speed = (moveH != 0 && moveV != 0) ? movementSpeed * 0.75f : movementSpeed;
         Vector3 movement = new Vector3(
-            moveH * movementSpeed * Time.deltaTime,
+            moveH * speed * Time.deltaTime,
             0,
-            moveV * movementSpeed * Time.deltaTime
+            moveV * speed * Time.deltaTime
         );
         // Move player to new positon.
         rb.MovePosition(transform.position + movement);
 
         // Turn player to face the moving direction.
-        rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F));
+        if (movement != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(movement);
+            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, rotation, 0.15F));
+            rb.MoveRotation(rotation);
+        }
 
         if (Input.GetKey("escape"))
         {
