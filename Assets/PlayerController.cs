@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     private Rigidbody rb;
 
     public float movementSpeed = 10f;
@@ -26,22 +25,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float moveH = Input.GetAxis("Horizontal"); // Horizontal movement.
+        float moveV = Input.GetAxis("Vertical"); // Vertical movement.
+
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
-        Vector3 direction = new Vector3(
-            Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime,
+        Vector3 movement = new Vector3(
+            moveH * movementSpeed * Time.deltaTime,
             0,
-            Input.GetAxis("Vertical")* movementSpeed * Time.deltaTime
+            moveV * movementSpeed * Time.deltaTime
         );
-
         // Move player to new positon.
-        rb.MovePosition(transform.position + direction);
+        rb.MovePosition(transform.position + movement);
 
-        // Rotate the player to the movement direction.
-        //Quaternion rotation = Quaternion.Euler(0f, rb.rotation.y + Input.GetAxis("Horizontal")*1000f*Time.deltaTime, 0f);
-        //rb.MoveRotation(rotation);
-        //Quaternion rotation = Input.GetAxisRaw("Horizontal");
-        rb.MoveRotation(Quaternion.Euler(0f, 1f, 0f));
+        // Turn player to face the moving direction.
+        rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F));
 
         if (Input.GetKey("escape"))
         {
