@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Rigidbody rb;
 
-    private Rigidbody playerRigidbody;
-
-    public float maxSpeed = 10f;
+    public float movementSpeed = 10f;
+    public float rotationSpeed = 10f;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
 
     void Awake()
     {
-        playerRigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -25,16 +25,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float moveH = Input.GetAxis("Horizontal"); // Horizontal movement.
+        float moveV = Input.GetAxis("Vertical"); // Vertical movement.
+
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
-        Vector3 direction = new Vector3(
-            Input.GetAxis("Horizontal") * maxSpeed * Time.deltaTime,
+        float speed = (moveH != 0 && moveV != 0) ? movementSpeed * 0.75f : movementSpeed;
+        Vector3 movement = new Vector3(
+            moveH * speed * Time.deltaTime,
             0,
-            Input.GetAxis("Vertical")* maxSpeed * Time.deltaTime
+            moveV * speed * Time.deltaTime
         );
-
         // Move player to new positon.
-        playerRigidbody.MovePosition(transform.position + direction);
+        rb.MovePosition(transform.position + movement);
+
+        // Turn player to face the moving direction.
+        if (movement != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(movement);
+            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, rotation, 0.15F));
+            rb.MoveRotation(rotation);
+        }
 
         if (Input.GetKey("escape"))
         {
