@@ -10,10 +10,17 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10f;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
+    //public GameObject cameraItself; //GameObject of the CCTV camera itself
+
+    Subject playerSubject = new Subject();
+    Subject soundSubject = new Subject();
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        playerSubject.AddObserver(new PlayerNotifier());
+        soundSubject.AddObserver(new SoundNotifier());
     }
 
     // Start is called before the first frame update
@@ -60,10 +67,17 @@ public class PlayerController : MonoBehaviour
 
         if (col.gameObject == visionCCTV)
         {
-            Debug.Log("You have been spotted!");
+            //Debug.Log("You have been spotted!");
+
+            ObserverEvent collision = new ObserverEvent("collision");
+            playerSubject.Notify(collision); //Observer pattern to notify of collision
+
             Destroy(gameObject); //destroys the player character
-            Application.Quit(); //quits the game
+
+            //Application.Quit(); //quits the game
 
         }
     }
 }
+
+

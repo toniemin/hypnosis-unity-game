@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//***
-//Script that detects when the player is seen by the CCTV
-//First draft
-//***
+/**
+ * Script that detects when the player is seen by the CCTV
+ * First draft
+ */
 
 public class PlayerSeenByCCTV : MonoBehaviour
 {
