@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float movementSpeed = 10f;
-    public float rotationSpeed = 10f;
+    public float walkSpeed = 10f; // Player's normal movement speed.
+    public float sneakSpeed = 1f; // Player's sneaking movement speed.
+    public float runSpeed = 15f; // Player's running speed.
+    public float rotationSpeed = 10f; // Player's rotation speed.
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
     //public GameObject cameraItself; //GameObject of the CCTV camera itself
@@ -32,6 +34,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float movementSpeed = walkSpeed;
+        // Check if player is sneaking.
+        if (Input.GetButton("Sneak"))
+        {
+            movementSpeed = sneakSpeed;
+        }
+
         float moveH = Input.GetAxis("Horizontal"); // Horizontal movement.
         float moveV = Input.GetAxis("Vertical"); // Vertical movement.
 
