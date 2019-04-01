@@ -34,11 +34,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Set default movement speed. Change if needed.
         float movementSpeed = walkSpeed;
+
         // Check if player is sneaking.
         if (Input.GetButton("Sneak"))
         {
             movementSpeed = sneakSpeed;
+        }
+        // Check if player is running.
+        if (Input.GetButton("Sprint"))
+        {
+            movementSpeed = runSpeed;
         }
 
         float moveH = Input.GetAxis("Horizontal"); // Horizontal movement.
@@ -52,6 +59,7 @@ public class PlayerController : MonoBehaviour
             0,
             moveV * speed * Time.deltaTime
         );
+        
         // Move player to new positon.
         rb.MovePosition(transform.position + movement);
 
@@ -59,7 +67,6 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector3.zero)
         {
             Quaternion rotation = Quaternion.LookRotation(movement);
-            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, rotation, 0.15F));
             rb.MoveRotation(rotation);
         }
 
