@@ -7,12 +7,9 @@ public class CameraController : MonoBehaviour
 
     public GameObject player; // Reference to the player.
 
-    private GameObject camera;
-
     // Start is called before the first frame update
     void Start()
     {
-        camera = 
     }
 
     // Update is called once per frame
@@ -21,8 +18,10 @@ public class CameraController : MonoBehaviour
         // Vector pointing towards player.
         Vector3 playerDir = player.transform.position;
 
-        float angle = Vector3.SignedAngle(Vector3.forward, playerDir);
+        float angle = Vector3.SignedAngle(Vector3.forward, playerDir, Vector3.zero);
          
+        Vector3 direction = (angle > 0f) ? Vector3.right : Vector3.left;
 
+        //transform.Translate(direction);
     }
 }
