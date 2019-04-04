@@ -6,10 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float walkSpeed = 10f; // Player's normal movement speed.
-    public float sneakSpeed = 1f; // Player's sneaking movement speed.
-    public float runSpeed = 15f; // Player's running speed.
+    public float walkSpeed = 20f; // Player's normal movement speed.
+    public float sneakSpeed = 10f; // Player's sneaking movement speed.
+    public float runSpeed = 35f; // Player's running speed.
     public float rotationSpeed = 10f; // Player's rotation speed.
+
+    private Vector3 movement;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
     //public GameObject cameraItself; //GameObject of the CCTV camera itself
@@ -54,25 +56,28 @@ public class PlayerController : MonoBehaviour
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
         float speed = (moveH != 0 && moveV != 0) ? movementSpeed * 0.75f : movementSpeed;
-        Vector3 movement = new Vector3(
-            moveH * speed * Time.deltaTime,
+        movement = new Vector3(
+            moveH * speed,
             0,
-            moveV * speed * Time.deltaTime
-        );
+            moveV * speed
+        ) * Time.deltaTime;
         
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit(); //quits the game if the player presses ESC
+        }
+    }
+
+    void FixedUpdate()
+    {
         // Move player to new positon.
         rb.MovePosition(transform.position + movement);
-
+        
         // Turn player to face the moving direction.
         if (movement != Vector3.zero)
         {
             Quaternion rotation = Quaternion.LookRotation(movement);
             rb.MoveRotation(rotation);
-        }
-
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit(); //quits the game if the player presses ESC
         }
     }
 
