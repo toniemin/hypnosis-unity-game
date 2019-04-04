@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5703d6ba2f63c4ba48aecfe99dad36f7
+guid: a53aa0e2ed31f024983c8d2bbba3a2fa
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -17,12 +17,7 @@ ModelImporter:
     3300000: Sofa
     4300000: Sofa
     10800000: Lamp
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 2091de058d940446cb515bd6edb11c28, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0

@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 216d22a55a6b84d1d856ecaffb3c7431
+guid: c9a16a8194f5f514981cc865ac939123
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: BigDrawer
-    100002: Camera
-    100004: //RootNode
+    100002: //RootNode
+    100004: Camera
     100006: Lamp
     400000: BigDrawer
-    400002: Camera
-    400004: //RootNode
+    400002: //RootNode
+    400004: Camera
     400006: Lamp
     2000000: Camera
     2100000: MainMaterial
@@ -17,17 +17,12 @@ ModelImporter:
     3300000: BigDrawer
     4300000: BigDrawer
     10800000: Lamp
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MainMaterial
-    second: {fileID: 2100000, guid: 7a0a6efa8b8ad4c5487f607a30934e8c, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
-    materialLocation: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

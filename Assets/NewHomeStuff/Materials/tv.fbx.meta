@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 79212a2f79bcf47d5b1983b8753746ad
+guid: 2e818d452e852ee41a70112636315d34
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -17,17 +17,12 @@ ModelImporter:
     3300000: TV
     4300000: TV
     10800000: Lamp
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MainMaterial
-    second: {fileID: 2100000, guid: 24f24d297d174458b80bc52dff1c7395, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
-    materialLocation: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
