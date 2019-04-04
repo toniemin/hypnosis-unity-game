@@ -143,10 +143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d75b29a35cd4384b911016f6fef9e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDash: 0
   walkSpeed: 10
   sneakSpeed: 5
   runSpeed: 15
   rotationSpeed: 10
+  dashSpeed: 200
   visionCCTV: {fileID: 0}
 --- !u!54 &21083171
 Rigidbody:
@@ -979,18 +981,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: dogplz
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -32.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 24.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 29.9
-      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.490891
@@ -1034,6 +1024,18 @@ PrefabInstance:
     - target: {fileID: 400004, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -32.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 24.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 29.9
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
       propertyPath: m_Enabled
@@ -1122,7 +1124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481353623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.69, y: 18.41, z: 0.21}
+  m_LocalPosition: {x: -1.69, y: 13.5, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1143,6 +1145,7 @@ MonoBehaviour:
   playerTransform: {fileID: 21083172}
   height: 15
   distance: -15
+  useCurrentPosition: 0
 --- !u!1 &1591256987
 GameObject:
   m_ObjectHideFlags: 0

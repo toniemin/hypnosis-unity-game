@@ -6,10 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
+    public bool enableDash = false; // Enable dashing mechanics.
+
     public float walkSpeed = 10f; // Player's normal movement speed.
     public float sneakSpeed = 1f; // Player's sneaking movement speed.
     public float runSpeed = 15f; // Player's running speed.
     public float rotationSpeed = 10f; // Player's rotation speed.
+
+    public float dashSpeed = 50f; // Speed at which the player dashes when double tapping movement keys.
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
     //public GameObject cameraItself; //GameObject of the CCTV camera itself
@@ -29,6 +33,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Debug.Log("");
+
+        if (enableDash)
+        {
+            StartCoroutine(DoubleTap("Horizontal", true));
+            StartCoroutine(DoubleTap("Horizontal", false));
+            StartCoroutine(DoubleTap("Vertical", true));
+            StartCoroutine(DoubleTap("Vertical", false));
+        }
     }
 
     // Update is called once per frame
@@ -92,6 +104,38 @@ public class PlayerController : MonoBehaviour
 
             //Application.Quit(); //quits the game
 
+        }
+    }
+
+    IEnumerator DoubleTap(string axis, bool positive)
+    {
+        float direction = positive ? 1 : -1;
+        while (true)
+        {
+            if (Input.GetAxisRaw(axis) == direction)
+            {
+                yield return new WaitForSeconds(0.1f);
+
+                if (Input.GetAxisRaw(axis) == 0)
+                {
+                    yield return new WaitForSeconds(0.1f);
+
+                    if (Input.GetAxisRaw(axis) == direction)
+                    {
+                        float speed = dashSpeed * direction * Time.deltaTime;
+
+                        Vector3 movement = axis == "Horizontal" ? new Vector3(speed, 0f, 0f) : new Vector3(0f, 0f, speed);
+
+                        rb.MovePosition(transform.position + movement);
+                    }
+                }
+                else
+                {
+                    yield return null;
+                }
+            }
+            else
+                yield return null;
         }
     }
 }
