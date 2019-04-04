@@ -1,25 +1,20 @@
 fileFormatVersion: 2
-guid: 7a25a6e3a9a67e94cbc7366631c28b5e
+guid: 7ba8a9b2b8b754adc8733decc28934f4
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_003"
-    2100002: Material
-    2100004: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_001"
+    2100000: drawertexture
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cube
-    7400000: Default Take
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
+    4300000: Drawer
   externalObjects: {}
   materials:
     importMaterials: 1
-    materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialName: 1
+    materialSearch: 0
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -67,7 +62,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -94,7 +89,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

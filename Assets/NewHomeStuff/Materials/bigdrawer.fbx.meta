@@ -1,25 +1,33 @@
 fileFormatVersion: 2
-guid: 7a25a6e3a9a67e94cbc7366631c28b5e
+guid: 216d22a55a6b84d1d856ecaffb3c7431
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_003"
-    2100002: Material
-    2100004: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_001"
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cube
-    7400000: Default Take
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
-  externalObjects: {}
+    100000: BigDrawer
+    100002: Camera
+    100004: //RootNode
+    100006: Lamp
+    400000: BigDrawer
+    400002: Camera
+    400004: //RootNode
+    400006: Lamp
+    2000000: Camera
+    2100000: MainMaterial
+    2300000: BigDrawer
+    3300000: BigDrawer
+    4300000: BigDrawer
+    10800000: Lamp
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainMaterial
+    second: {fileID: 2100000, guid: 7a0a6efa8b8ad4c5487f607a30934e8c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialSearch: 0
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -67,7 +75,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -94,7 +102,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
