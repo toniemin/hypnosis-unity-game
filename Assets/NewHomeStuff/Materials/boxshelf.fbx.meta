@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 17696015b7f2c415e8f8ed009cfc7912
+guid: fa7acb918451a8745822b6c5916c915f
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -9,12 +9,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Boxshelf
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MainMaterial
-    second: {fileID: 2100000, guid: 22bfb79b34b654a7f8e1ec651587c031, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
