@@ -3,8 +3,33 @@ guid: 7a25a6e3a9a67e94cbc7366631c28b5e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_003"
+    2100002: Material
+    2100004: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_001"
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 814ec1268f4b2470fa82e474efc75c2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_001"
+    second: {fileID: 2100000, guid: 814ec1268f4b2470fa82e474efc75c2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "Material__150113_\u1100\u1161\u11BC\u110B\u1161\u110C\u1175_\u1111\u1166\u110B\u1175\u1111\u1165\u1110\u1169\u110B\u1175_003"
+    second: {fileID: 2100000, guid: 814ec1268f4b2470fa82e474efc75c2e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -57,7 +82,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

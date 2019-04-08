@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     public float dashSpeed = 50f; // Speed at which the player dashes when double tapping movement keys.
 
+    private Vector3 movement;
+
     public GameObject visionCCTV; //GameObject of CCTV's vision
     //public GameObject cameraItself; //GameObject of the CCTV camera itself
 
@@ -66,25 +68,28 @@ public class PlayerController : MonoBehaviour
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
         float speed = (moveH != 0 && moveV != 0) ? movementSpeed * 0.75f : movementSpeed;
-        Vector3 movement = new Vector3(
-            moveH * speed * Time.deltaTime,
+        movement = new Vector3(
+            moveH * speed,
             0,
-            moveV * speed * Time.deltaTime
-        );
+            moveV * speed
+        ) * Time.deltaTime;
         
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit(); //quits the game if the player presses ESC
+        }
+    }
+
+    void FixedUpdate()
+    {
         // Move player to new positon.
         rb.MovePosition(transform.position + movement);
-
+        
         // Turn player to face the moving direction.
         if (movement != Vector3.zero)
         {
             Quaternion rotation = Quaternion.LookRotation(movement);
             rb.MoveRotation(rotation);
-        }
-
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit(); //quits the game if the player presses ESC
         }
     }
 
