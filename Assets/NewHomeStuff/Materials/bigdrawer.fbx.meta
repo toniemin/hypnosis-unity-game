@@ -17,7 +17,12 @@ ModelImporter:
     3300000: BigDrawer
     4300000: BigDrawer
     10800000: Lamp
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainMaterial
+    second: {fileID: 2100000, guid: 7a0a6efa8b8ad4c5487f607a30934e8c, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

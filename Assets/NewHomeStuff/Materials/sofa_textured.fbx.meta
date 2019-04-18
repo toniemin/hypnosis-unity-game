@@ -17,7 +17,12 @@ ModelImporter:
     3300000: Sofa
     4300000: Sofa
     10800000: Lamp
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 2091de058d940446cb515bd6edb11c28, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
