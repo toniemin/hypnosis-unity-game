@@ -16,11 +16,15 @@ public class PlayerController : MonoBehaviour
     public GameObject visionCCTV; //GameObject of CCTV's vision
     //public GameObject cameraItself; //GameObject of the CCTV camera itself
 
+    public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
+
     Subject playerSubject = new Subject();
     Subject soundSubject = new Subject();
 
     void Awake()
     {
+        gameOverPanel.SetActive(false);
+
         rb = GetComponent<Rigidbody>();
 
         playerSubject.AddObserver(new PlayerNotifier());
@@ -31,11 +35,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Debug.Log("");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("***********");
         // Set default movement speed. Change if needed.
         float movementSpeed = walkSpeed;
 
@@ -60,8 +66,9 @@ public class PlayerController : MonoBehaviour
             moveH * speed,
             0,
             moveV * speed
-        ) * Time.deltaTime;
-        
+        );
+            //) * Time.deltaTime;
+
         if (Input.GetKey("escape"))
         {
             Application.Quit(); //quits the game if the player presses ESC
@@ -90,10 +97,14 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("You have been spotted!");
 
+            gameOverPanel.SetActive(true);
+
             ObserverEvent collision = new ObserverEvent("collision");
             playerSubject.Notify(collision); //Observer pattern to notify of collision
 
             Destroy(gameObject); //destroys the player character
+
+            
 
             //Application.Quit(); //quits the game
 

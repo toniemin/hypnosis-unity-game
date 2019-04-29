@@ -31,14 +31,17 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Update player's position.
-        Vector3 playerPos = playerTransform.position;
-
-        // Update camera position. Control distance using 'height' (for y-axis) and 'distance' (for z-axis) variables.
-        // The position on the x-asis is the same as the player.
-        transform.position = new Vector3(playerPos.x, playerPos.y + height, playerPos.z + distance);
-
-        // Turn the camera towards the player.
-        transform.LookAt(playerPos);
+        if (playerTransform != null)
+        { 
+            // Update player's position. 
+            Vector3 playerPos = playerTransform.position; 
+            
+            // Update camera position. Control distance using 'height' (for y-axis) and 'distance' (for z-axis) variables. 
+            // The position on the x-asis is the same as the player. 
+            transform.position = new Vector3(playerPos.x, playerPos.y + height, playerPos.z + distance); 
+             
+            // Turn the camera towards the player. 
+            transform.LookAt(playerPos); 
+        } 
     }
 }
