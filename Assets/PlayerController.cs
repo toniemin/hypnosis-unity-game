@@ -6,10 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float walkSpeed = 20f; // Player's normal movement speed.
-    public float sneakSpeed = 10f; // Player's sneaking movement speed.
-    public float runSpeed = 35f; // Player's running speed.
-    public float rotationSpeed = 10f; // Player's rotation speed.
+    private float walkSpeed = 10f; // Player's normal movement speed.
+    private float sneakSpeed = 5f; // Player's sneaking movement speed.
+    private float runSpeed = 17f; // Player's running speed.
+    private float rotationSpeed = 5f; // Player's rotation speed.
 
     private Vector3 movement;
 
@@ -42,6 +42,30 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Debug.Log("***********");
+        //// Set default movement speed. Change if needed.
+        //float movementSpeed = walkSpeed;
+
+        //// Check if player is sneaking.
+        //if (Input.GetButton("Sneak"))
+        //{
+        //    movementSpeed = sneakSpeed;
+        //}
+        //// Check if player is running.
+        //if (Input.GetButton("Sprint"))
+        //{
+        //    movementSpeed = runSpeed;
+        //}
+
+//////////////////////////////////////
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit(); //quits the game if the player presses ESC
+        }
+    }
+
+    void FixedUpdate()
+    {
         // Set default movement speed. Change if needed.
         float movementSpeed = walkSpeed;
 
@@ -56,8 +80,14 @@ public class PlayerController : MonoBehaviour
             movementSpeed = runSpeed;
         }
 
+
+
         float moveH = Input.GetAxis("Horizontal"); // Horizontal movement.
         float moveV = Input.GetAxis("Vertical"); // Vertical movement.
+
+        if (Input.GetButtonDown("Horizontal"))
+            Debug.Log("moveH: " + moveH.ToString());
+        //Debug.Log("moveV: " + moveV.ToString());
 
         // Read movement direction from the keyboard using Input.GetAxis
         // and apply speed to it.
@@ -66,17 +96,8 @@ public class PlayerController : MonoBehaviour
             moveH * speed,
             0,
             moveV * speed
-        );
-            //) * Time.deltaTime;
+        ) * Time.fixedDeltaTime;
 
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit(); //quits the game if the player presses ESC
-        }
-    }
-
-    void FixedUpdate()
-    {
         // Move player to new positon.
         rb.MovePosition(transform.position + movement);
         

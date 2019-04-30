@@ -2077,7 +2077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  sneakSpeed: 1
+  sneakSpeed: 100
   runSpeed: 15
   rotationSpeed: 10
   visionCCTV: {fileID: 858671511}
