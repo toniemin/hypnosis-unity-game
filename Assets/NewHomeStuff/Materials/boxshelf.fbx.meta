@@ -9,7 +9,13 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Boxshelf
-  externalObjects: {}
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainMaterial
+    second: {fileID: 2100000, guid: 22bfb79b34b654a7f8e1ec651587c031, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
