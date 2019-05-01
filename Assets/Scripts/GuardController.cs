@@ -67,14 +67,14 @@ public class GuardController : MonoBehaviour
 
     IEnumerator TurnToFace(Vector3 lookTarget)
     {
-        Vector3 dirLookTarget = (lookTarget - transform.position).normalized;
-        float targetAngle = 90 - Mathf.Atan2(dirLookTarget.z, dirLookTarget.x) * Mathf.Rad2Deg;
-
-        while (Mathf.Approximately(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle), 0))
+        Quaternion targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
+        while ( ! Mathf.Approximately( Quaternion.Angle(transform.rotation, targetRotation), 0 ) )
         {
-            float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnSpeed * Time.deltaTime);
-            transform.eulerAngles = Vector3.up * angle;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+            targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
             yield return null;
         }
+
     }
 }
