@@ -10,10 +10,20 @@ public class CameraController : MonoBehaviour
 
     public float distance = -20f; // How far away from the player the camera is (z-axis).
 
+    public bool useCurrentPosition = false; // Copy the position of the camera set in Unity editor to height and distance.
+
     void Awake()
     {
         // Get player's position.
         Vector3 playerPos = playerTransform.position;
+        
+        if (useCurrentPosition)
+        {
+            height = playerPos.y - transform.position.y;
+            height = height >= 0 ? height : -height;
+
+            distance = -(playerPos.z - transform.position.z);
+        }
 
         // Set camera position. Control distance using 'height' (for y-axis) and 'distance' (for z-axis) variables.
         // The position on the x-asis is the same as the player.

@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+
   m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -143,10 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d75b29a35cd4384b911016f6fef9e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDash: 0
   walkSpeed: 10
   sneakSpeed: 5
   runSpeed: 15
   rotationSpeed: 10
+  dashSpeed: 200
   visionCCTV: {fileID: 0}
 --- !u!54 &21083171
 Rigidbody:
@@ -827,7 +830,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 12f65ac6de199774aa42a7baeccda493, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1040,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dogplz
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9dceebf75c29a0a42954a6e8618a4d57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.3
@@ -1187,7 +1194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481353623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.69, y: 18.41, z: 0.21}
+  m_LocalPosition: {x: -1.69, y: 13.5, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1208,6 +1215,7 @@ MonoBehaviour:
   playerTransform: {fileID: 21083172}
   height: 15
   distance: -15
+  useCurrentPosition: 0
 --- !u!1 &1591256987
 GameObject:
   m_ObjectHideFlags: 0
