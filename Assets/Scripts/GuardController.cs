@@ -9,9 +9,30 @@ public class GuardController : MonoBehaviour
     private float speed = 10f;
     private float waitTime = .3f;
     private float turnSpeed = 90f;
+    public float timeToSpotPlayer = .5f;
+
+    public Light spotlight;
+    public float viewDistance;
+    public LayerMask viewMask;
+
+    float viewAngle;
+    Transform player;
+    public GameObject playerGameObject;
+
+    public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
+
+    void Awake()
+    {
+        gameOverPanel.SetActive(false);
+    }
 
     private void Start()
     {
+
+        player = playerGameObject.transform;
+          
+        viewAngle = spotlight.spotAngle;
+
         Vector3[] waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < waypoints.Length; i++)
         {
@@ -22,6 +43,43 @@ public class GuardController : MonoBehaviour
         StartCoroutine(FollowPath(waypoints));
 
         Debug.Log("transform.position: " + transform.position.ToString() + ", waypoint pos: " + waypoints[2].ToString() + ", angle: " + Vector3.Angle(transform.position, waypoints[2]));
+    }
+
+    void Update()
+    {
+        spotlight.transform.position = transform.position;
+
+        if (CanSeePlayer())
+        {
+            gameOverPanel.SetActive(true);
+            Destroy(player.gameObject);
+        }
+        else
+        {
+            //Feeling cute, might use this later (or not)
+        }
+    }
+
+    bool CanSeePlayer()
+    {
+        if (player != null)
+        {
+            if (Vector3.Distance(transform.position, player.position) < viewDistance)
+            {
+                Vector3 dirToPlayer = (player.position - transform.position).normalized;
+                float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+                if (angleBetweenGuardAndPlayer < viewAngle / 2f)
+                {
+                    if (!Physics.Linecast(transform.position, player.position, viewMask))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        else return false;
     }
 
     void OnDrawGizmos()
