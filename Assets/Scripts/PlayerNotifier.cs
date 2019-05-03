@@ -24,7 +24,7 @@ public class PlayerNotifier : Observer
         if (ev.eventName == "collision")
         {
             Debug.Log("You have been spotted! Sincerely, a PlayerNotifier class object");
-            Application.Quit(); //quits the game
+            //Application.Quit(); //quits the game
         }
             //Debug.Log("PlayerNotifier has been notified of a collusion");
     }
