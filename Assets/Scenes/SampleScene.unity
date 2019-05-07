@@ -1361,6 +1361,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerGameObject: {fileID: 1059004787}
+  wallInSight: 0
   gameOverPanel: {fileID: 1356559381}
 --- !u!4 &257653594 stripped
 Transform:
@@ -2636,7 +2637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &567956078
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7107,6 +7108,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerGameObject: {fileID: 1059004787}
+  wallInSight: 0
   gameOverPanel: {fileID: 1356559381}
   guard: {fileID: 257653592}
   collisionCylinder: {fileID: 1406080226}
