@@ -18,6 +18,7 @@ public class GuardController : MonoBehaviour
     float viewAngle;
     Transform player;
     public GameObject playerGameObject;
+    public bool wallInSight = false;
 
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
@@ -42,17 +43,19 @@ public class GuardController : MonoBehaviour
 
         StartCoroutine(FollowPath(waypoints));
 
-        Debug.Log("transform.position: " + transform.position.ToString() + ", waypoint pos: " + waypoints[2].ToString() + ", angle: " + Vector3.Angle(transform.position, waypoints[2]));
+        Debug.Log("transform.position: " + transform.position.ToString() + ", waypoint pos: " + waypoints[2].ToString() + ", angle: " + Vector3.Angle(transform.position, waypoints[2]) + "transform: " + transform);
     }
 
     void Update()
     {
         spotlight.transform.position = transform.position;
+        Debug.Log(wallInSight);
 
-        if (CanSeePlayer())
+        if (CanSeePlayer() && !wallInSight)
         {
             gameOverPanel.SetActive(true);
             Destroy(player.gameObject);
+            Debug.Log("Final: " + wallInSight);
         }
         else
         {
@@ -82,6 +85,36 @@ public class GuardController : MonoBehaviour
         else return false;
     }
 
+    bool WallInSight()
+    {
+            int result;
+            GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+
+            for (int i = 0; i < walls.Length; i++)
+            {
+                if (Vector3.Distance(transform.position, walls[i].transform.position) < viewDistance)
+                {
+                    Vector3 dirToWall = (walls[i].transform.position - transform.position).normalized;
+                    float angleBetweenGuardAndWall = Vector3.Angle(transform.forward, dirToWall);
+                    if (angleBetweenGuardAndWall < viewAngle / 2f)
+                    {
+                        if (!Physics.Linecast(transform.position, walls[i].transform.position, viewMask))
+                        {
+                            Debug.Log(i);
+                            //result = 1;
+                            return true;
+                            
+                        }
+                        
+                    }
+                }
+                return false;
+            }
+
+        return false;
+    }
+
+  
     void OnDrawGizmos()
     {
         Vector3 startPosition = pathHolder.GetChild(0).position;

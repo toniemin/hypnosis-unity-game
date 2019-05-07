@@ -12,12 +12,15 @@ public class PlayerSeenByCCTV : MonoBehaviour
     //public Rigidbody visionRigidbody;
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
+    public GameObject objectForCCTV; //GameObject of CCTV
     public GameObject player; //GameObject of the player's character
     public Rigidbody playerRigidbody;
+    public Light spotlight;
 
     void Start()
     {
         visionCCTV.GetComponent<Renderer>().enabled = false; //makes the vision cylinder invisible
+        spotlight.transform.position = objectForCCTV.transform.position;
     }
 
     void Update()
