@@ -19,15 +19,27 @@ public class GuardController : MonoBehaviour
     Transform player;
     public GameObject playerGameObject;
 
+    public GameObject timebar;
+    RectTransform timebarParent;
+    DetectionBarController barController;
+
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
     void Awake()
     {
         gameOverPanel.SetActive(false);
+        timebar.SetActive(false);
+        //timebar.transform.SetAsLastSibling();
+        //timebarParent = timebar.GetComponentInParent<RectTransform>();
+        //timebarParent.SetAsLastSibling();
     }
 
     private void Start()
     {
+        
+        barController = timebar.GetComponent<DetectionBarController>();
+
+        
 
         player = playerGameObject.transform;
           
@@ -51,13 +63,31 @@ public class GuardController : MonoBehaviour
 
         if (CanSeePlayer())
         {
-            gameOverPanel.SetActive(true);
-            Destroy(player.gameObject);
+            timebar.SetActive(true);
+            barController.StartIncreasing(Spotted);
+
         }
         else
         {
-            //Feeling cute, might use this later (or not)
+            if ((timebar.activeSelf) && !barController.HasBeenCalled())
+            {
+                barController.StopIncreasing(hideTimebar);
+                //barController.ResetSliders();
+                
+            }
         }
+    }
+
+    void Spotted()
+    {
+        gameOverPanel.SetActive(true);
+        hideTimebar();
+        Destroy(player.gameObject);
+    }
+
+    void hideTimebar()
+    {
+        timebar.SetActive(false);
     }
 
     bool CanSeePlayer()

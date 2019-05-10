@@ -31,7 +31,8 @@ public class ToggleIncreaseTest : MonoBehaviour
         }
         else
         {
-            script.StopIncreasing();
+            //script.StopIncreasing();
+            script.StopIncreasing(log);
         }
     }
 }
