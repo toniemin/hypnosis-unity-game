@@ -18,7 +18,6 @@ public class GuardController : MonoBehaviour
     float viewAngle;
     Transform player;
     public GameObject playerGameObject;
-    public bool wallInSight = false;
 
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
@@ -49,13 +48,11 @@ public class GuardController : MonoBehaviour
     void Update()
     {
         spotlight.transform.position = transform.position;
-        Debug.Log(wallInSight);
 
-        if (CanSeePlayer() && !wallInSight)
+        if (CanSeePlayer())
         {
             gameOverPanel.SetActive(true);
             Destroy(player.gameObject);
-            Debug.Log("Final: " + wallInSight);
         }
         else
         {
@@ -67,7 +64,8 @@ public class GuardController : MonoBehaviour
     {
         if (player != null)
         {
-            if (Vector3.Distance(transform.position, player.position) < viewDistance)
+            if ((Vector3.Distance(transform.position, player.position) < viewDistance) //if the player is within view distance
+                && (!Physics.Raycast(transform.position, Vector3.forward, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
             {
                 Vector3 dirToPlayer = (player.position - transform.position).normalized;
                 float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
@@ -83,35 +81,6 @@ public class GuardController : MonoBehaviour
         }
 
         else return false;
-    }
-
-    bool WallInSight()
-    {
-            int result;
-            GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-
-            for (int i = 0; i < walls.Length; i++)
-            {
-                if (Vector3.Distance(transform.position, walls[i].transform.position) < viewDistance)
-                {
-                    Vector3 dirToWall = (walls[i].transform.position - transform.position).normalized;
-                    float angleBetweenGuardAndWall = Vector3.Angle(transform.forward, dirToWall);
-                    if (angleBetweenGuardAndWall < viewAngle / 2f)
-                    {
-                        if (!Physics.Linecast(transform.position, walls[i].transform.position, viewMask))
-                        {
-                            Debug.Log(i);
-                            //result = 1;
-                            return true;
-                            
-                        }
-                        
-                    }
-                }
-                return false;
-            }
-
-        return false;
     }
 
   
