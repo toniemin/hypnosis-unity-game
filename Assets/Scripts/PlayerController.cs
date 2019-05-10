@@ -13,6 +13,24 @@ public class PlayerController : MonoBehaviour
     public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
+    // Running mechanic variables.
+    private float sprintDepletionRate = .3f;
+
+    private float sprintRefillRate = .6f;
+    private float sprintRefillDelay = .3f;
+
+    private float sprintDisableRefillDelay = 1f;
+
+    private IEnumerator sprintDepleter;
+    private IEnumerator sprintDisabler;
+    private IEnumerator sprintRefiller;
+
+    //private bool sprintDepleting = false;
+    private bool sprintDisabled = false;
+    private bool sprintRefilling = false;
+    
+    public float SprintEnergy { get; private set; } = 1;
+
     Subject playerSubject = new Subject();
     Subject soundSubject = new Subject();
 
@@ -24,11 +42,31 @@ public class PlayerController : MonoBehaviour
 
         playerSubject.AddObserver(new PlayerNotifier());
         soundSubject.AddObserver(new SoundNotifier());
-    }
+
+        sprintDepleter = depleteSprint(sprintDepletionRate);
+        sprintDisabler = disableSprint(sprintDisableRefillDelay);
+        sprintRefiller = refillSprint(sprintRefillDelay, sprintRefillRate);
+}
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Sprint") && ! sprintDisabled)
+        {
+            if (sprintRefilling)
+            {
+                StopCoroutine(sprintRefiller);
+            }
+
+            StartCoroutine( sprintDepleter );
+        }
+
+        if (Input.GetButtonUp("Sprint") && ! sprintRefilling)
+        {
+            StopCoroutine(sprintDepleter);
+            StartCoroutine(sprintRefiller);
+        }
+
         if (Input.GetKey("escape"))
         {
             Application.Quit(); //quits the game if the player presses ESC
@@ -41,7 +79,7 @@ public class PlayerController : MonoBehaviour
         float movementSpeed = walkSpeed;
 
         // Check if player is running.
-        if (Input.GetButton("Sprint"))
+        if (Input.GetButton("Sprint") && ! sprintDisabled)
         {
             movementSpeed = runSpeed;
         }
@@ -66,6 +104,48 @@ public class PlayerController : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(movement);
             rb.MoveRotation(rotation);
         }
+    }
+
+    // Deplete sprint meter and call disableSprint if meter gets to 0.
+    IEnumerator depleteSprint(float rate)
+    {
+        while (Mathf.Approximately(SprintEnergy, 0))
+        {
+            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 0, rate * Time.deltaTime);
+
+            yield return null;
+        }
+
+        StartCoroutine( sprintDisabler );
+    }
+
+    IEnumerator disableSprint(float refillDelay)
+    {
+        sprintDisabled = true;
+
+        yield return new WaitForSeconds(refillDelay);
+
+        StartCoroutine( sprintRefiller );
+    }
+
+    // Wait for the delay and then start refilling sprint meter. 
+    // If sprint was disabled, renable after meter full.
+    IEnumerator refillSprint(float delay, float rate)
+    {
+        sprintRefilling = true;
+
+        yield return new WaitForSeconds(delay);
+
+        while (Mathf.Approximately(SprintEnergy, 1))
+        {
+            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 1, rate * Time.deltaTime);
+
+            yield return null;
+        }
+
+        sprintDisabled = false;
+
+        sprintRefilling = false;
     }
 
     //Called when the playe collides with visionCCTV
