@@ -13,31 +13,25 @@ public class ToggleIncreaseTest : MonoBehaviour
         script = controller.GetComponent<DetectionBarController>();
     }
 
+    void log()
+    {
+        Debug.Log("callback, time's up!");
+    }
+
+    public void press()
+    {
+        Toggle(true);
+    }
+
     public void Toggle(bool state)
     {
         if (state)
         {
-            script.StartIncreasing();
+            script.StartIncreasing(log);
         }
         else
         {
             script.StopIncreasing();
         }
-    }
-
-    IEnumerator Test()
-    {
-        Debug.Log("CurrentValue: " + script.currentValue);
-        Debug.Log("Starting increase!");
-        script.StartIncreasing();
-
-
-        yield return new WaitForSeconds(3f);
-        Debug.Log("CurrentValue: " + script.currentValue);
-        yield return new WaitForSeconds(1f);
-
-        Debug.Log("Stopping increase!");
-        script.StopIncreasing();
-        Debug.Log("CurrentValue " + script.currentValue);
     }
 }

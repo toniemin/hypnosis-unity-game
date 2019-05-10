@@ -29,18 +29,17 @@ public class DetectionBarController : MonoBehaviour
     }
     
     // Start increasing the slider value with default rate until 1 or stopped.
-    public void StartIncreasing()
+    public void StartIncreasing(System.Action callback)
     {
-        StartCoroutine(Increase(increaseRate));
-
-        // Set status text.
-        statusLabel.text = TEXT_DETECTED;
+        StartIncreasing(callback, increaseRate);
     }
 
     // Start increasing the slider value with custom rate until 1 or stopped.
-    public void StartIncreasing(float rate)
+    public void StartIncreasing(System.Action callback, float rate)
     {
-        StartCoroutine(Increase(rate));
+        StartCoroutine(Increase(callback, rate));
+        // Set status text.
+        statusLabel.text = TEXT_DETECTED;
     }
 
     // Stop increasing and after a delay, start decreasing the slider value until 0.
@@ -85,7 +84,7 @@ public class DetectionBarController : MonoBehaviour
     }
 
     // Start increasing slider value until 1 or stopped.
-    private IEnumerator Increase(float rate)
+    private IEnumerator Increase(System.Action callback, float rate)
     {
         while (! Mathf.Approximately(currentValue, 1))
         {
@@ -95,5 +94,7 @@ public class DetectionBarController : MonoBehaviour
 
             yield return null;
         }
+
+        callback();
     }
 }
