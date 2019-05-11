@@ -13,10 +13,12 @@ public class PlayerController : MonoBehaviour
     public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
+
+
     // Running mechanic variables.
     private float sprintDepletionRate = .3f;
 
-    private float sprintRefillRate = .6f;
+    private float sprintRefillRate = .1f;
     private float sprintRefillDelay = .3f;
 
     private float sprintDisableRefillDelay = 1f;
@@ -109,18 +111,20 @@ public class PlayerController : MonoBehaviour
     // Deplete sprint meter and call disableSprint if meter gets to 0.
     IEnumerator depleteSprint(float rate)
     {
-        while (Mathf.Approximately(SprintEnergy, 0))
+        Debug.Log("Depleting sprint");
+        while (! Mathf.Approximately(SprintEnergy, 0))
         {
             SprintEnergy = Mathf.MoveTowards(SprintEnergy, 0, rate * Time.deltaTime);
 
             yield return null;
         }
-
+        Debug.Log("Sprint depleted");
         StartCoroutine( sprintDisabler );
     }
 
     IEnumerator disableSprint(float refillDelay)
     {
+        Debug.Log("Disabling sprint");
         sprintDisabled = true;
 
         yield return new WaitForSeconds(refillDelay);
@@ -132,16 +136,19 @@ public class PlayerController : MonoBehaviour
     // If sprint was disabled, renable after meter full.
     IEnumerator refillSprint(float delay, float rate)
     {
+        Debug.Log("refilling sprint");
         sprintRefilling = true;
 
         yield return new WaitForSeconds(delay);
 
-        while (Mathf.Approximately(SprintEnergy, 1))
+        while (! Mathf.Approximately(SprintEnergy, 1))
         {
             SprintEnergy = Mathf.MoveTowards(SprintEnergy, 1, rate * Time.deltaTime);
 
             yield return null;
         }
+
+        Debug.Log("Sprint full, enabling sprint");
 
         sprintDisabled = false;
 
