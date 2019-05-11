@@ -15,6 +15,8 @@ public class DetectionBarController : MonoBehaviour
     public float increaseRate = .3f;
     public float decreaseRate = .1f;
 
+    bool hasBeenCalled = false;
+
     // Current slider value.
     public float currentValue { get; private set; }
 
@@ -43,13 +45,15 @@ public class DetectionBarController : MonoBehaviour
     }
 
     // Stop increasing and after a delay, start decreasing the slider value until 0.
-    public void StopIncreasing()
+    public void StopIncreasing(System.Action callback)
     {
         // Set status text.
         statusLabel.text = TEXT_UNSEEN;
 
         StopAllCoroutines();
-        StartCoroutine(Decrease(decreaseDelay, decreaseRate));
+        StartCoroutine(Decrease(callback, decreaseDelay, decreaseRate));
+
+        hasBeenCalled = true;
     }
 
     private void Start()
@@ -68,8 +72,19 @@ public class DetectionBarController : MonoBehaviour
         sliderRight.value = currentValue;
     }
 
+    public void ResetSliders()
+    {
+        sliderLeft.value = 0.0f; 
+        sliderRight.value = 0.0f; 
+    }
+
+    public bool HasBeenCalled()
+    {
+        return hasBeenCalled;
+    }
+
     // Wait for the delay and start decreasing slider values until 0.
-    private IEnumerator Decrease(float delay, float rate)
+    private IEnumerator Decrease(System.Action callback, float delay, float rate)
     {
         yield return new WaitForSeconds(delay);
 
@@ -81,6 +96,8 @@ public class DetectionBarController : MonoBehaviour
 
             yield return null;
         }
+
+        callback();
     }
 
     // Start increasing slider value until 1 or stopped.
