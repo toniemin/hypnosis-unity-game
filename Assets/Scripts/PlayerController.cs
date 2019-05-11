@@ -6,16 +6,32 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     
-    public bool enableDash = false; // Enable dashing mechanics.
-    
-    private float dashSpeed = 50f; // Speed at which the player dashes when double tapping movement keys.
     private float walkSpeed = 10f; // Player's normal movement speed.
-    private float sneakSpeed = 5f; // Player's sneaking movement speed.
     private float runSpeed = 17f; // Player's running speed.
     private float rotationSpeed = 5f; // Player's rotation speed.
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
+
+
+
+    // Running mechanic variables.
+    private float sprintDepletionRate = .3f;
+
+    private float sprintRefillRate = .1f;
+    private float sprintRefillDelay = .3f;
+
+    private float sprintDisableRefillDelay = 1f;
+
+    private IEnumerator sprintDepleter;
+    private IEnumerator sprintDisabler;
+    private IEnumerator sprintRefiller;
+
+    //private bool sprintDepleting = false;
+    private bool sprintDisabled = false;
+    private bool sprintRefilling = false;
+    
+    public float SprintEnergy { get; private set; } = 1;
 
     Subject playerSubject = new Subject();
     Subject soundSubject = new Subject();
@@ -28,17 +44,29 @@ public class PlayerController : MonoBehaviour
 
         playerSubject.AddObserver(new PlayerNotifier());
         soundSubject.AddObserver(new SoundNotifier());
-    }
+
+        sprintDepleter = depleteSprint(sprintDepletionRate);
+        sprintDisabler = disableSprint(sprintDisableRefillDelay);
+        sprintRefiller = refillSprint(sprintRefillDelay, sprintRefillRate);
+}
 
     // Update is called once per frame
     void Update()
     {
-        if (enableDash)
+        if (Input.GetButtonDown("Sprint") && ! sprintDisabled)
         {
-            StartCoroutine(DoubleTap("Horizontal", true));
-            StartCoroutine(DoubleTap("Horizontal", false));
-            StartCoroutine(DoubleTap("Vertical", true));
-            StartCoroutine(DoubleTap("Vertical", false));
+            if (sprintRefilling)
+            {
+                StopCoroutine(sprintRefiller);
+            }
+
+            StartCoroutine( sprintDepleter );
+        }
+
+        if (Input.GetButtonUp("Sprint") && ! sprintRefilling)
+        {
+            StopCoroutine(sprintDepleter);
+            StartCoroutine(sprintRefiller);
         }
 
         if (Input.GetKey("escape"))
@@ -52,13 +80,8 @@ public class PlayerController : MonoBehaviour
         // Set default movement speed. Change if needed.
         float movementSpeed = walkSpeed;
 
-        // Check if player is sneaking.
-        if (Input.GetButton("Sneak"))
-        {
-            movementSpeed = sneakSpeed;
-        }
         // Check if player is running.
-        if (Input.GetButton("Sprint"))
+        if (Input.GetButton("Sprint") && ! sprintDisabled)
         {
             movementSpeed = runSpeed;
         }
@@ -85,6 +108,53 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Deplete sprint meter and call disableSprint if meter gets to 0.
+    IEnumerator depleteSprint(float rate)
+    {
+        Debug.Log("Depleting sprint");
+        while (! Mathf.Approximately(SprintEnergy, 0))
+        {
+            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 0, rate * Time.deltaTime);
+
+            yield return null;
+        }
+        Debug.Log("Sprint depleted");
+        StartCoroutine( sprintDisabler );
+    }
+
+    IEnumerator disableSprint(float refillDelay)
+    {
+        Debug.Log("Disabling sprint");
+        sprintDisabled = true;
+
+        yield return new WaitForSeconds(refillDelay);
+
+        StartCoroutine( sprintRefiller );
+    }
+
+    // Wait for the delay and then start refilling sprint meter. 
+    // If sprint was disabled, renable after meter full.
+    IEnumerator refillSprint(float delay, float rate)
+    {
+        Debug.Log("refilling sprint");
+        sprintRefilling = true;
+
+        yield return new WaitForSeconds(delay);
+
+        while (! Mathf.Approximately(SprintEnergy, 1))
+        {
+            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 1, rate * Time.deltaTime);
+
+            yield return null;
+        }
+
+        Debug.Log("Sprint full, enabling sprint");
+
+        sprintDisabled = false;
+
+        sprintRefilling = false;
+    }
+
     //Called when the playe collides with visionCCTV
     void OnCollisionEnter(Collision col)
     {
@@ -99,37 +169,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator DoubleTap(string axis, bool positive)
-    {
-        float direction = positive ? 1 : -1;
-        while (true)
-        {
-            if (Input.GetAxisRaw(axis) == direction)
-            {
-                yield return new WaitForSeconds(0.1f);
-
-                if (Input.GetAxisRaw(axis) == 0)
-                {
-                    yield return new WaitForSeconds(0.1f);
-
-                    if (Input.GetAxisRaw(axis) == direction)
-                    {
-                        float speed = dashSpeed * direction * Time.deltaTime;
-
-                        Vector3 movement = axis == "Horizontal" ? new Vector3(speed, 0f, 0f) : new Vector3(0f, 0f, speed);
-
-                        rb.MovePosition(transform.position + movement);
-                    }
-                }
-                else
-                {
-                    yield return null;
-                }
-            }
-            else
-                yield return null;
-        }
-    }
 }
 
 
