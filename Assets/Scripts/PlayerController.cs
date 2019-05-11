@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -13,24 +14,15 @@ public class PlayerController : MonoBehaviour
     public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
 
-
+    // UI indicator for player's run energy. UI for SprintEnergy variable.
+    public Slider SprintEnergySlider;
 
     // Running mechanic variables.
-    private float sprintDepletionRate = .3f;
-
-    private float sprintRefillRate = .1f;
-    private float sprintRefillDelay = .3f;
-
-    private float sprintDisableRefillDelay = 1f;
-
-    private IEnumerator sprintDepleter;
-    private IEnumerator sprintDisabler;
-    private IEnumerator sprintRefiller;
-
-    //private bool sprintDepleting = false;
-    private bool sprintDisabled = false;
-    private bool sprintRefilling = false;
-    
+    bool sprintDepleting = false;
+    float sprintDepleteRate = .8f;
+    bool sprintDisabled = false;
+    float sprintDisabledTime = 2f;
+    float sprintRefillRate = .05f;
     public float SprintEnergy { get; private set; } = 1;
 
     Subject playerSubject = new Subject();
@@ -44,31 +36,19 @@ public class PlayerController : MonoBehaviour
 
         playerSubject.AddObserver(new PlayerNotifier());
         soundSubject.AddObserver(new SoundNotifier());
+    }
 
-        sprintDepleter = depleteSprint(sprintDepletionRate);
-        sprintDisabler = disableSprint(sprintDisableRefillDelay);
-        sprintRefiller = refillSprint(sprintRefillDelay, sprintRefillRate);
-}
+    private void Start()
+    {
+        // Start coroutines that control the player's sprint energy meter.
+        StartCoroutine(UpdateSprintEnergySlider());
+        StartCoroutine(DepleteSprint());
+        StartCoroutine(RefillSprint());
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Sprint") && ! sprintDisabled)
-        {
-            if (sprintRefilling)
-            {
-                StopCoroutine(sprintRefiller);
-            }
-
-            StartCoroutine( sprintDepleter );
-        }
-
-        if (Input.GetButtonUp("Sprint") && ! sprintRefilling)
-        {
-            StopCoroutine(sprintDepleter);
-            StartCoroutine(sprintRefiller);
-        }
-
         if (Input.GetKey("escape"))
         {
             Application.Quit(); //quits the game if the player presses ESC
@@ -108,51 +88,58 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Deplete sprint meter and call disableSprint if meter gets to 0.
-    IEnumerator depleteSprint(float rate)
+    // Deplete sprint energy meter whenever player holds sprint key.
+    // If sprint meter reaches 0, disable spriting for some time.
+    IEnumerator DepleteSprint()
     {
-        Debug.Log("Depleting sprint");
-        while (! Mathf.Approximately(SprintEnergy, 0))
+        while (true)
         {
-            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 0, rate * Time.deltaTime);
+            if (Input.GetButton("Sprint"))
+            {
+                sprintDepleting = true;
+                if (! Mathf.Approximately(SprintEnergy, 0))
+                {
+                    SprintEnergy = Mathf.MoveTowards(SprintEnergy, 0, sprintDepleteRate * Time.deltaTime);
+                    yield return null;
+                }
+                else
+                {
+                    sprintDisabled = true;
+                    yield return new WaitForSeconds(sprintDisabledTime);
+                    sprintDisabled = false;
+                }
+            }
+            else
+            {
+                sprintDepleting = false;
+            }
 
             yield return null;
         }
-        Debug.Log("Sprint depleted");
-        StartCoroutine( sprintDisabler );
     }
 
-    IEnumerator disableSprint(float refillDelay)
+    // Refill sprint energy meter whenever it is not depleting.
+    IEnumerator RefillSprint()
     {
-        Debug.Log("Disabling sprint");
-        sprintDisabled = true;
-
-        yield return new WaitForSeconds(refillDelay);
-
-        StartCoroutine( sprintRefiller );
-    }
-
-    // Wait for the delay and then start refilling sprint meter. 
-    // If sprint was disabled, renable after meter full.
-    IEnumerator refillSprint(float delay, float rate)
-    {
-        Debug.Log("refilling sprint");
-        sprintRefilling = true;
-
-        yield return new WaitForSeconds(delay);
-
-        while (! Mathf.Approximately(SprintEnergy, 1))
+        while (true)
         {
-            SprintEnergy = Mathf.MoveTowards(SprintEnergy, 1, rate * Time.deltaTime);
+            if (! sprintDepleting)
+            {
+                SprintEnergy = Mathf.MoveTowards(SprintEnergy, 1, sprintRefillRate * Time.deltaTime);
+            }
 
             yield return null;
         }
+    }
 
-        Debug.Log("Sprint full, enabling sprint");
+    IEnumerator UpdateSprintEnergySlider()
+    {
+        while (true)
+        {
+            SprintEnergySlider.value = SprintEnergy;
 
-        sprintDisabled = false;
-
-        sprintRefilling = false;
+            yield return null;
+        }
     }
 
     //Called when the playe collides with visionCCTV
