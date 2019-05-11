@@ -801,7 +801,6 @@ GameObject:
   m_Component:
   - component: {fileID: 149422249}
   - component: {fileID: 149422248}
-  - component: {fileID: 149422247}
   m_Layer: 0
   m_Name: AudioObject
   m_TagString: Untagged
@@ -809,18 +808,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &149422247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149422246}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3acc28330ff02ba4bbd2563680c80187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &149422248
 AudioSource:
   m_ObjectHideFlags: 0
