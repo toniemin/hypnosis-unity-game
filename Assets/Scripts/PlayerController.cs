@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     
     private float walkSpeed = 10f; // Player's normal movement speed.
     private float runSpeed = 17f; // Player's running speed.
-    private float rotationSpeed = 5f; // Player's rotation speed.
 
     public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text

@@ -53,8 +53,6 @@ public class GuardController : MonoBehaviour
         }
 
         StartCoroutine(FollowPath(waypoints));
-
-        Debug.Log("transform.position: " + transform.position.ToString() + ", waypoint pos: " + waypoints[2].ToString() + ", angle: " + Vector3.Angle(transform.position, waypoints[2]) + "transform: " + transform);
     }
 
     void Update()
