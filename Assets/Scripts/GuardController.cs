@@ -57,6 +57,7 @@ public class GuardController : MonoBehaviour
 
     void Update()
     {
+        //Debug.DrawRay(transform.position, transform.forward * viewDistance, Color.red,3f);
         spotlight.transform.position = transform.position;
 
         if (CanSeePlayer())
@@ -93,8 +94,10 @@ public class GuardController : MonoBehaviour
         if (player != null)
         {
             if ((Vector3.Distance(transform.position, player.position) < viewDistance) //if the player is within view distance
-                && (!Physics.Raycast(transform.position, Vector3.forward, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
+                && (!Physics.Raycast(transform.position, transform.forward * viewDistance, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
             {
+                Debug.Log("Raycast works: " + transform.gameObject);
+                
                 Vector3 dirToPlayer = (player.position - transform.position).normalized;
                 float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
                 if (angleBetweenGuardAndPlayer < viewAngle / 2f)

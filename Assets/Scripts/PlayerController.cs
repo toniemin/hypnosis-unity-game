@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
 
             Destroy(gameObject); //destroys the player character
         }
+
     }
 
 }
