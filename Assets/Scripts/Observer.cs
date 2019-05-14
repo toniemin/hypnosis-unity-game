@@ -15,7 +15,7 @@ public interface IObserver
 public abstract class Notifier : MonoBehaviour
 {
     //A list with observers that are waiting for something to happen
-    public List<IObserver> observers;
+    public List<IObserver> observers = new List<IObserver>();
 
     //Send notifications if something has happened
     public void Notify(ObserverEvent ev)

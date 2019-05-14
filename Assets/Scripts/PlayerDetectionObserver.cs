@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerDetectionObserver : MonoBehaviour, IObserver
+public class PlayerDetectionObserver : Notifier, IObserver
 {
 
-    public GameObject detectionUI;
+    public Slider detectionSlider1;
+    public Slider detectionSlider2;
+    public Text detectionText;
 
     public Notifier[] guards;
+    
+    public GameObject endScreen;
 
-    public System.Action onDetectionMax;
+    System.Action onDetectionMax;
 
     public float increaseRate = .1f;
     public float decreaseRate = .1f;
@@ -20,16 +25,23 @@ public class PlayerDetectionObserver : MonoBehaviour, IObserver
 
     bool isDetected = false;
 
+    void Awake()
+    {
+        IObserver observer = endScreen.GetComponent<IObserver>();
+        AddObserver(observer);
+    }
+
     private void Start()
     {
-        IObserver observer = GetComponent<IObserver>();
+        
         foreach (Notifier guard in guards)
         {
-            guard.AddObserver(observer);
+            guard.AddObserver(this);
         }
 
         StartCoroutine(DepleteDetection());
         StartCoroutine(RefillDetection());
+        StartCoroutine(UpdateUI());
     }
 
     public void OnNotify(ObserverEvent env)
@@ -50,6 +62,17 @@ public class PlayerDetectionObserver : MonoBehaviour, IObserver
     //    Destroy(player.gameObject);
     //}
 
+    IEnumerator UpdateUI()
+    {
+        while (true)
+        {
+            detectionSlider1.value = DetectionValue;
+            detectionSlider2.value = DetectionValue;
+            detectionText.text = (isDetected ? "Detected" : "Unseen");
+
+            yield return null;
+        }
+    }
     IEnumerator DepleteDetection()
     {
         while (true)
@@ -62,7 +85,7 @@ public class PlayerDetectionObserver : MonoBehaviour, IObserver
                 }
                 else
                 {
-                    Debug.Log("Game ended!");
+                    Notify(new ObserverEvent("gameover"));
                 }
             }
 
@@ -80,6 +103,10 @@ public class PlayerDetectionObserver : MonoBehaviour, IObserver
                 {
                     DetectionValue = Mathf.MoveTowards(DetectionValue, 1, increaseRate * Time.deltaTime);
                 }
+            }
+            else
+            {
+                yield return new WaitForSeconds(2f);
             }
 
             yield return null;

@@ -72,6 +72,12 @@ public class GuardController : Notifier
         return false;
     }
 
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward * viewDistance, Color.red, 3f);
+        spotlight.transform.position = transform.position;
+    }
+
 
     void OnDrawGizmos()
     {
