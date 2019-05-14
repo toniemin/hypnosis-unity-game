@@ -57,7 +57,7 @@ public class GuardController : MonoBehaviour
 
     void Update()
     {
-        //Debug.DrawRay(transform.position, transform.forward * viewDistance, Color.red,3f);
+        Debug.DrawRay(transform.position, transform.forward * viewDistance, Color.red,3f);
         spotlight.transform.position = transform.position;
 
         if (CanSeePlayer())
@@ -70,6 +70,7 @@ public class GuardController : MonoBehaviour
         {
             if ((timebar.activeSelf) && !barController.HasBeenCalled())
             {
+                Debug.Log("Can't see");
                 barController.StopIncreasing(hideTimebar);
                 //barController.ResetSliders();
                 
@@ -87,6 +88,7 @@ public class GuardController : MonoBehaviour
     void hideTimebar()
     {
         timebar.SetActive(false);
+        //barController.setHasBeenCalledValue(false);
     }
 
     bool CanSeePlayer()
@@ -96,7 +98,7 @@ public class GuardController : MonoBehaviour
             if ((Vector3.Distance(transform.position, player.position) < viewDistance) //if the player is within view distance
                 && (!Physics.Raycast(transform.position, transform.forward * viewDistance, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
             {
-                Debug.Log("Raycast works: " + transform.gameObject);
+                //Debug.Log("Raycast works: " + transform.gameObject);
                 
                 Vector3 dirToPlayer = (player.position - transform.position).normalized;
                 float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);

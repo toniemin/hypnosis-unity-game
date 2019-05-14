@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class SceneTransitionScript : MonoBehaviour
+public class WinScript : MonoBehaviour
 {
+    public GameObject GameWinScreen;
     public GameObject player;
-    public int nextSceneIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameWinScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,8 +22,8 @@ public class SceneTransitionScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == player)
-        { 
-            SceneManager.LoadScene(nextSceneIndex, LoadSceneMode.Single);
+        {
+            GameWinScreen.SetActive(true);
         }
     }
 }

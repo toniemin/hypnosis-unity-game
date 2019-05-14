@@ -16105,6 +16105,7 @@ GameObject:
   - component: {fileID: 1473925915}
   - component: {fileID: 1473925914}
   - component: {fileID: 1473925919}
+  - component: {fileID: 1473925918}
   m_Layer: 0
   m_Name: Floor (3)
   m_TagString: Wall
@@ -16184,6 +16185,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
+--- !u!114 &1473925918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473925913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e087da10cf949ce4a85e3d27a7562251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 304733772}
+  nextSceneIndex: 2
 --- !u!64 &1473925919
 MeshCollider:
   m_ObjectHideFlags: 0

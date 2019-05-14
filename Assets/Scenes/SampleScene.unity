@@ -7243,6 +7243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1272844909}
+  nextSceneIndex: 1
 --- !u!64 &1473925919
 MeshCollider:
   m_ObjectHideFlags: 0

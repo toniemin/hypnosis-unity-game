@@ -12,7 +12,7 @@ public class DetectionBarController : MonoBehaviour
 
     // Variables to control the slider behaviour.
     public float decreaseDelay = 3f;
-    public float increaseRate = .3f;
+    public float increaseRate = .1f;
     public float decreaseRate = .1f;
 
     bool hasBeenCalled = false;
@@ -48,6 +48,7 @@ public class DetectionBarController : MonoBehaviour
     // Stop increasing and after a delay, start decreasing the slider value until 0.
     public void StopIncreasing(System.Action callback)
     {
+        //hasBeenCalled = true;
         // Set status text.
         statusLabel.text = TEXT_UNSEEN;
 
@@ -84,6 +85,11 @@ public class DetectionBarController : MonoBehaviour
         return hasBeenCalled;
     }
 
+    public void setHasBeenCalledValue(bool value)
+    {
+        hasBeenCalled = value;
+    }
+
     // Wait for the delay and start decreasing slider values until 0.
     private IEnumerator Decrease(System.Action callback, float delay, float rate)
     {
@@ -99,7 +105,10 @@ public class DetectionBarController : MonoBehaviour
         }
 
         hasBeenCalled = false;
+        Debug.Log("Decrease finished");
         callback();
+        //hasBeenCalled = false;
+
     }
 
     // Start increasing slider value until 1 or stopped.
