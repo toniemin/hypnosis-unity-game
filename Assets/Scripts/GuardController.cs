@@ -2,47 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardController : MonoBehaviour
+public class GuardController : Notifier
 {
     public Transform pathHolder;
+    public Transform player;
 
     private float speed = 10f;
     private float waitTime = .3f;
     private float turnSpeed = 90f;
-    public float timeToSpotPlayer = .5f;
+    //public float timeToSpotPlayer = .5f;
 
-    public Light spotlight;
     public float viewDistance;
+    public Light spotlight;
     public LayerMask viewMask;
 
     float viewAngle;
-    Transform player;
-    public GameObject playerGameObject;
+    bool playerInView = false;
+    bool notificationSent = false;
+    string guardName;
 
-    public GameObject timebar;
-    RectTransform timebarParent;
-    DetectionBarController barController;
-
-    public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
-
-    void Awake()
+    private void Awake()
     {
-        gameOverPanel.SetActive(false);
-        timebar.SetActive(false);
-        //timebar.transform.SetAsLastSibling();
-        //timebarParent = timebar.GetComponentInParent<RectTransform>();
-        //timebarParent.SetAsLastSibling();
+        guardName = gameObject.name;
     }
 
     private void Start()
     {
-        
-        barController = timebar.GetComponent<DetectionBarController>();
+        if (pathHolder == null)
+        {
+            Debug.Log("Error: a guard is missing a pathHolder!");
+            Destroy(gameObject);
+        }
 
-        
+        if (player == null)
+        {
+            Debug.Log("Error: a guard is missing a player reference!");
+            Destroy(gameObject);
+        }
 
-        player = playerGameObject.transform;
-          
         viewAngle = spotlight.spotAngle;
 
         Vector3[] waypoints = new Vector3[pathHolder.childCount];
@@ -53,70 +50,29 @@ public class GuardController : MonoBehaviour
         }
 
         StartCoroutine(FollowPath(waypoints));
-    }
-
-    void Update()
-    {
-        Debug.DrawRay(transform.position, transform.forward * viewDistance, Color.red,3f);
-        spotlight.transform.position = transform.position;
-
-        if (CanSeePlayer())
-        {
-            timebar.SetActive(true);
-            barController.StartIncreasing(Spotted);
-
-        }
-        else
-        {
-            if ((timebar.activeSelf) && !barController.HasBeenCalled())
-            {
-                Debug.Log("Can't see");
-                barController.StopIncreasing(hideTimebar);
-                //barController.ResetSliders();
-                
-            }
-        }
-    }
-
-    void Spotted()
-    {
-        gameOverPanel.SetActive(true);
-        hideTimebar();
-        Destroy(player.gameObject);
-    }
-
-    void hideTimebar()
-    {
-        timebar.SetActive(false);
-        //barController.setHasBeenCalledValue(false);
+        StartCoroutine(DetectPlayer());
     }
 
     bool CanSeePlayer()
     {
-        if (player != null)
+        if ((Vector3.Distance(transform.position, player.position) < viewDistance) //if the player is within view distance
+        && (!Physics.Raycast(transform.position, transform.forward * viewDistance, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
         {
-            if ((Vector3.Distance(transform.position, player.position) < viewDistance) //if the player is within view distance
-                && (!Physics.Raycast(transform.position, transform.forward * viewDistance, viewDistance))) //if there are no walls/colliders blocking the guard from seeing the player
+            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+            float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+            if (angleBetweenGuardAndPlayer < viewAngle / 2f)
             {
-                //Debug.Log("Raycast works: " + transform.gameObject);
-                
-                Vector3 dirToPlayer = (player.position - transform.position).normalized;
-                float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-                if (angleBetweenGuardAndPlayer < viewAngle / 2f)
+                if (!Physics.Linecast(transform.position, player.position, viewMask))
                 {
-                    if (!Physics.Linecast(transform.position, player.position, viewMask))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
-            return false;
         }
 
-        else return false;
+        return false;
     }
 
-  
+
     void OnDrawGizmos()
     {
         Vector3 startPosition = pathHolder.GetChild(0).position;
@@ -135,39 +91,65 @@ public class GuardController : MonoBehaviour
         Gizmos.DrawLine(startPosition, prevPosition);
     }
 
-    IEnumerator FollowPath(Vector3[] waypoints)
+    IEnumerator DetectPlayer()
     {
-        transform.position = waypoints[0];
-        transform.LookAt(waypoints[0]);
-
-        int targetWaypointIndex = 1;
-        Vector3 targetWaypoint = waypoints[targetWaypointIndex];
-
         while (true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
-            if (transform.position == targetWaypoint)
+            playerInView = CanSeePlayer();
+
+            if (playerInView && !notificationSent)
             {
-                targetWaypointIndex = ++targetWaypointIndex % waypoints.Length;
-                targetWaypoint = waypoints[targetWaypointIndex];
-                
-                yield return new WaitForSeconds(waitTime);
-                yield return StartCoroutine(TurnToFace(targetWaypoint));
+                Notify(new ObserverEvent(guardName + ":detected"));
+                notificationSent = true;
             }
+
+
+            if (!playerInView)
+            {
+                if (notificationSent)
+                {
+                    Notify(new ObserverEvent(guardName + ":lost"));
+                    notificationSent = false;
+                }
+            }
+
             yield return null;
         }
     }
 
-    IEnumerator TurnToFace(Vector3 lookTarget)
+    IEnumerator FollowPath(Vector3[] waypoints)
+{
+    transform.position = waypoints[0];
+    transform.LookAt(waypoints[0]);
+
+    int targetWaypointIndex = 1;
+    Vector3 targetWaypoint = waypoints[targetWaypointIndex];
+
+    while (true)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
-        while ( ! Mathf.Approximately( Quaternion.Angle(transform.rotation, targetRotation), 0 ) )
+        transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
+        if (transform.position == targetWaypoint)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+            targetWaypointIndex = ++targetWaypointIndex % waypoints.Length;
+            targetWaypoint = waypoints[targetWaypointIndex];
 
-            targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
-            yield return null;
+            yield return new WaitForSeconds(waitTime);
+            yield return StartCoroutine(TurnToFace(targetWaypoint));
         }
-
+        yield return null;
     }
+}
+
+IEnumerator TurnToFace(Vector3 lookTarget)
+{
+    Quaternion targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
+    while (!Mathf.Approximately(Quaternion.Angle(transform.rotation, targetRotation), 0))
+    {
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+        targetRotation = Quaternion.LookRotation(lookTarget - transform.position);
+        yield return null;
+    }
+
+}
 }

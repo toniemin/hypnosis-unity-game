@@ -5,7 +5,7 @@ using UnityEngine;
 /**
  * SoundNotifier class for handling Observer patterns attached to sound
  */
-public class SoundNotifier : Observer
+public class SoundNotifier
 {
     // Start is called before the first frame update
     void Start()
@@ -19,9 +19,9 @@ public class SoundNotifier : Observer
 
     }
 
-    public override void OnNotify(ObserverEvent ev)
-    {
-        //Handling code goes here
-    }
+    //public override void OnNotify(ObserverEvent ev)
+    //{
+    //    //Handling code goes here
+    //}
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 /**
  * PlayerNotifier class for handling Observer patterns attached to Player
  */
-public class PlayerNotifier : Observer
+public class PlayerNotifier
 {
     // Start is called before the first frame update
     void Start()
@@ -19,14 +19,14 @@ public class PlayerNotifier : Observer
         
     }
 
-    public override void OnNotify(ObserverEvent ev)
-    {
-        if (ev.eventName == "collision")
-        {
-            Debug.Log("You have been spotted! Sincerely, a PlayerNotifier class object");
-            //Application.Quit(); //quits the game
-        }
-            //Debug.Log("PlayerNotifier has been notified of a collusion");
-    }
+    //public override void OnNotify(ObserverEvent ev)
+    //{
+    //    if (ev.eventName == "collision")
+    //    {
+    //        Debug.Log("You have been spotted! Sincerely, a PlayerNotifier class object");
+    //        //Application.Quit(); //quits the game
+    //    }
+    //        //Debug.Log("PlayerNotifier has been notified of a collusion");
+    //}
 
 }

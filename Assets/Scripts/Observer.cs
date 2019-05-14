@@ -7,15 +7,15 @@ using UnityEngine;
  * Observer, ObserverEvent and Subject classes
  */
 
-public abstract class Observer
+public interface IObserver
 {
-    public abstract void OnNotify(ObserverEvent ev);
+    void OnNotify(ObserverEvent ev);
 }
 
-public class Subject
+public abstract class Notifier : MonoBehaviour
 {
     //A list with observers that are waiting for something to happen
-     List<Observer> observers = new List<Observer>();
+    public List<IObserver> observers;
 
     //Send notifications if something has happened
     public void Notify(ObserverEvent ev)
@@ -29,17 +29,17 @@ public class Subject
     }
 
     //Add observer to the list
-    public void AddObserver(Observer observer)
+    public void AddObserver(IObserver observer)
     {
-       observers.Add(observer);
+        observers.Add(observer);
     }
 
     //Remove observer from the list
-    public void RemoveObserver(Observer observer)
+    public void RemoveObserver(IObserver observer)
     {
         observers.Remove(observer);
     }
-    
+
 }
 
 public class ObserverEvent

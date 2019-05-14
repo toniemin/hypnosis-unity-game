@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
     private float walkSpeed = 10f; // Player's normal movement speed.
     private float runSpeed = 17f; // Player's running speed.
 
-    public GameObject visionCCTV; //GameObject of CCTV's vision
-    public GameObject gameOverPanel; //Panel for displaying the "You have been spotted!" text
-
     // UI indicator for player's run energy. UI for SprintEnergy variable.
     public Slider SprintEnergySlider;
 
@@ -23,18 +20,13 @@ public class PlayerController : MonoBehaviour
     float sprintDisabledTime = 2f;
     float sprintRefillRate = .05f;
     public float SprintEnergy { get; private set; } = 1;
-
-    Subject playerSubject = new Subject();
-    Subject soundSubject = new Subject();
-
+    
     void Awake()
     {
-        gameOverPanel.SetActive(false);
+       rb = GetComponent<Rigidbody>();
 
-        rb = GetComponent<Rigidbody>();
-
-        playerSubject.AddObserver(new PlayerNotifier());
-        soundSubject.AddObserver(new SoundNotifier());
+        //playerSubject.AddObserver(new PlayerNotifier());
+        //soundSubject.AddObserver(new SoundNotifier());
     }
 
     private void Start()
@@ -142,19 +134,19 @@ public class PlayerController : MonoBehaviour
     }
 
     //Called when the playe collides with visionCCTV
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject == visionCCTV)
-        {
-            gameOverPanel.SetActive(true);
+    //void OnCollisionEnter(Collision col)
+    //{
+    //    if (col.gameObject == visionCCTV)
+    //    {
+    //        gameOverPanel.SetActive(true);
 
-            ObserverEvent collision = new ObserverEvent("collision");
-            playerSubject.Notify(collision); //Observer pattern to notify of collision
+    //        ObserverEvent collision = new ObserverEvent("collision");
+    //        playerSubject.Notify(collision); //Observer pattern to notify of collision
 
-            Destroy(gameObject); //destroys the player character
-        }
+    //        Destroy(gameObject); //destroys the player character
+    //    }
 
-    }
+    //}
 
 }
 
