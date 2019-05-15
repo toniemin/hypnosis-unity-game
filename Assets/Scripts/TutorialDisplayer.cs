@@ -73,7 +73,14 @@ public class TutorialDisplayer : MonoBehaviour
     {
         // Change player's camera back to the level's main camera
         // upon gameObject's destruction.
-        tutorialCamera.enabled = false;
-        sceneMainCamera.enabled = true;
+        if (tutorialCamera != null)
+        {
+            tutorialCamera.enabled = false;
+        }
+
+        if (tutorialCamera != null)
+        {
+            sceneMainCamera.enabled = true;
+        }
     }
 }
