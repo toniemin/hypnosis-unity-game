@@ -1669,6 +1669,12 @@ PrefabInstance:
       objectReference: {fileID: 534669904}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45d722775dabce44bb297b0d73045037, type: 3}
+--- !u!1 &408884389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7050168998414064330, guid: 45d722775dabce44bb297b0d73045037,
+    type: 3}
+  m_PrefabInstance: {fileID: 408884388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &428794523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2424,7 +2430,7 @@ PrefabInstance:
         type: 3}
       propertyPath: endScreen
       value: 
-      objectReference: {fileID: 1356559381}
+      objectReference: {fileID: 408884389}
     - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
         type: 3}
       propertyPath: guards.Array.data[0]
@@ -2463,6 +2469,11 @@ PrefabInstance:
     - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
         type: 3}
       propertyPath: guards.Array.data[7]
+      value: 
+      objectReference: {fileID: 1383776462}
+    - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
+        type: 3}
+      propertyPath: guards.Array.data[8]
       value: 
       objectReference: {fileID: 1383776462}
     m_RemovedComponents: []
@@ -6408,14 +6419,13 @@ GameObject:
   - component: {fileID: 1356559382}
   - component: {fileID: 1356559384}
   - component: {fileID: 1356559383}
-  - component: {fileID: 1356559385}
   m_Layer: 5
   m_Name: GameOverPopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1356559382
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6478,20 +6488,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356559381}
   m_CullTransparentMesh: 0
---- !u!114 &1356559385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356559381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57219abf3eae82740a14f39944d2a521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 534669904}
-  endCamera: {fileID: 1659624092}
 --- !u!1 &1365523011
 GameObject:
   m_ObjectHideFlags: 0
@@ -7926,7 +7922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1659624091
 AudioListener:
   m_ObjectHideFlags: 0
