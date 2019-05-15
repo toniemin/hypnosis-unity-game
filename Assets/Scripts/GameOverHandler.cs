@@ -21,5 +21,6 @@ public class GameOverHandler : MonoBehaviour, IObserver
     {
         mainCamera.enabled = false;
         endCamera.enabled = true;
+        this.gameObject.SetActive(true); //Displays the endScreen
     }
 }
