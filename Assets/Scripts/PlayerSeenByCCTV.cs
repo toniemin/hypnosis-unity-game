@@ -7,7 +7,7 @@ using UnityEngine;
  * First draft
  */
 
-public class PlayerSeenByCCTV : MonoBehaviour
+public class PlayerSeenByCCTV : Notifier
 {
     //public Rigidbody visionRigidbody;
 
@@ -16,6 +16,9 @@ public class PlayerSeenByCCTV : MonoBehaviour
     public GameObject player; //GameObject of the player's character
     public Rigidbody playerRigidbody;
     public Light spotlight;
+
+    bool playerInView = false;
+    bool notificationSent = false;
 
     void Start()
     {
@@ -28,10 +31,15 @@ public class PlayerSeenByCCTV : MonoBehaviour
         //Debug.Log("Console");
     }
 
+    //public void OnNotify(ObserverEvent env)
+    //{
+    //    Debug.Log("seen");
+    //}
+
     //Called when visionCCTV collides with a GameObject
     void OnCollisionEnter(Collision col)
     {
-        //Debug.Log("Collision");
+        Debug.Log("Collision");
 
         /*
           if (col.gameObject == playerRigidbody)
@@ -40,5 +48,40 @@ public class PlayerSeenByCCTV : MonoBehaviour
             //Destroy(col.gameObject);
         }
         */
+
+        //Notify(new ObserverEvent("CCTV" + ":detected"));
+        playerInView = true;
+
+    }
+
+    private void OnCollisionExit(Collision col)
+    {
+        //Notify(new ObserverEvent("CCTV" + ":lost"));
+        playerInView = false;
+    }
+
+    IEnumerator DetectPlayer()
+    {
+        while (true)
+        {
+
+            if (playerInView && !notificationSent)
+            {
+                Notify(new ObserverEvent("CCTV" + ":detected"));
+                notificationSent = true;
+            }
+
+
+            if (!playerInView)
+            {
+                if (notificationSent)
+                {
+                    Notify(new ObserverEvent("CCTV" + ":lost"));
+                    notificationSent = false;
+                }
+            }
+
+            yield return null;
+        }
     }
 }
