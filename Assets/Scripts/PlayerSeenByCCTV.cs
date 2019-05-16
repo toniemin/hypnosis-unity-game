@@ -11,10 +11,10 @@ public class PlayerSeenByCCTV : Notifier
 {
     //public Rigidbody visionRigidbody;
 
-    public GameObject visionCCTV; //GameObject of CCTV's vision
+    //public GameObject visionCCTV; //GameObject of CCTV's vision
     public GameObject objectForCCTV; //GameObject of CCTV
     public GameObject player; //GameObject of the player's character
-    public Rigidbody playerRigidbody;
+    //public Rigidbody playerRigidbody;
     public Light spotlight;
 
     bool playerInView = false;
@@ -22,8 +22,10 @@ public class PlayerSeenByCCTV : Notifier
 
     void Start()
     {
-        visionCCTV.GetComponent<Renderer>().enabled = false; //makes the vision cylinder invisible
+        gameObject.GetComponent<Renderer>().enabled = false; //makes the vision cylinder invisible
         spotlight.transform.position = objectForCCTV.transform.position;
+
+        StartCoroutine(DetectPlayer());
     }
 
     void Update()
@@ -39,25 +41,27 @@ public class PlayerSeenByCCTV : Notifier
     //Called when visionCCTV collides with a GameObject
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log("Collision");
 
-        /*
-          if (col.gameObject == playerRigidbody)
+        if (col.gameObject == player) //playerRigidbody
         {
-            Debug.Log("You have been spotted!");
+            //Debug.Log("You have been spotted!");
             //Destroy(col.gameObject);
+            playerInView = true;
+            Debug.Log("Collision");
+            Debug.Log(notificationSent);
         }
-        */
+
 
         //Notify(new ObserverEvent("CCTV" + ":detected"));
-        playerInView = true;
+
 
     }
 
     private void OnCollisionExit(Collision col)
     {
         //Notify(new ObserverEvent("CCTV" + ":lost"));
-        playerInView = false;
+        if (col.gameObject == player)
+            playerInView = false;
     }
 
     IEnumerator DetectPlayer()
@@ -69,6 +73,7 @@ public class PlayerSeenByCCTV : Notifier
             {
                 Notify(new ObserverEvent("CCTV" + ":detected"));
                 notificationSent = true;
+                Debug.Log("Notif for detection");
             }
 
 
@@ -78,6 +83,7 @@ public class PlayerSeenByCCTV : Notifier
                 {
                     Notify(new ObserverEvent("CCTV" + ":lost"));
                     notificationSent = false;
+                    Debug.Log("Notif for lost");
                 }
             }
 

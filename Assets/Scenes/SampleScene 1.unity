@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4608,7 +4608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &391337091
 Transform:
   m_ObjectHideFlags: 0
@@ -4635,10 +4635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5f0b75020bd0043850699b19fce06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionCCTV: {fileID: 1538160050}
   objectForCCTV: {fileID: 980256738}
   player: {fileID: 0}
-  playerRigidbody: {fileID: 0}
   spotlight: {fileID: 2066981819}
 --- !u!1 &402011893
 GameObject:
@@ -6345,7 +6343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &561066124
 Transform:
   m_ObjectHideFlags: 0
@@ -6372,10 +6370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5f0b75020bd0043850699b19fce06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionCCTV: {fileID: 858671511}
   objectForCCTV: {fileID: 567956077}
   player: {fileID: 0}
-  playerRigidbody: {fileID: 0}
   spotlight: {fileID: 1642752512}
 --- !u!1 &567956077
 GameObject:
@@ -7304,7 +7300,7 @@ PrefabInstance:
     - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
         type: 3}
       propertyPath: guards.Array.size
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
         type: 3}
@@ -7366,6 +7362,16 @@ PrefabInstance:
       propertyPath: guards.Array.data[7]
       value: 
       objectReference: {fileID: 1383776462}
+    - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
+        type: 3}
+      propertyPath: guards.Array.data[8]
+      value: 
+      objectReference: {fileID: 1538160055}
+    - target: {fileID: 6335998813397049829, guid: 66dcdd6a0a11231468cc4bbcdcb33853,
+        type: 3}
+      propertyPath: guards.Array.data[9]
+      value: 
+      objectReference: {fileID: 858671516}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66dcdd6a0a11231468cc4bbcdcb33853, type: 3}
 --- !u!1 &628434812
@@ -9763,6 +9769,7 @@ GameObject:
   - component: {fileID: 858671515}
   - component: {fileID: 858671514}
   - component: {fileID: 858671513}
+  - component: {fileID: 858671516}
   m_Layer: 0
   m_Name: Vision
   m_TagString: Untagged
@@ -9844,6 +9851,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858671511}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &858671516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858671511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5f0b75020bd0043850699b19fce06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectForCCTV: {fileID: 567956077}
+  player: {fileID: 304733772}
+  spotlight: {fileID: 1642752512}
 --- !u!1001 &862896602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17040,6 +17062,7 @@ GameObject:
   - component: {fileID: 1538160054}
   - component: {fileID: 1538160053}
   - component: {fileID: 1538160052}
+  - component: {fileID: 1538160055}
   m_Layer: 0
   m_Name: Vision
   m_TagString: Untagged
@@ -17121,6 +17144,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538160050}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1538160055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538160050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5f0b75020bd0043850699b19fce06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectForCCTV: {fileID: 980256738}
+  player: {fileID: 304733772}
+  spotlight: {fileID: 2066981819}
 --- !u!1 &1541487656
 GameObject:
   m_ObjectHideFlags: 0
@@ -20779,11 +20817,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2408458963600516549, guid: ec04450954fc5d44ea748e22e7825d61,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2408458963600516548, guid: ec04450954fc5d44ea748e22e7825d61,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20854,6 +20887,11 @@ PrefabInstance:
       propertyPath: SprintEnergySlider
       value: 
       objectReference: {fileID: 21665802}
+    - target: {fileID: 2408458963600516549, guid: ec04450954fc5d44ea748e22e7825d61,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec04450954fc5d44ea748e22e7825d61, type: 3}
 --- !u!1 &1830785307 stripped
