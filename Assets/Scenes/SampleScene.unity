@@ -3754,6 +3754,11 @@ PrefabInstance:
       propertyPath: sceneMainCamera
       value: 
       objectReference: {fileID: 534669904}
+    - target: {fileID: 4592698159316238476, guid: 1990b9db06dc6d44c8743a6579cdb027,
+        type: 3}
+      propertyPath: tutorialCamera
+      value: 
+      objectReference: {fileID: 784467178}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1990b9db06dc6d44c8743a6579cdb027, type: 3}
 --- !u!1 &760700967
@@ -3862,6 +3867,12 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!20 &784467178 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4592698159889653651, guid: 1990b9db06dc6d44c8743a6579cdb027,
+    type: 3}
+  m_PrefabInstance: {fileID: 759151715}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &812307334 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1534778545563350171, guid: eda5a02d47e5743588abe09981a371c8,
