@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16939,6 +16939,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 534669904}
+    - target: {fileID: 2971758621954455082, guid: 45d722775dabce44bb297b0d73045037,
+        type: 3}
+      propertyPath: currentSceneIndex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45d722775dabce44bb297b0d73045037, type: 3}
 --- !u!1 &1504195291 stripped
@@ -20774,6 +20779,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2408458963600516549, guid: ec04450954fc5d44ea748e22e7825d61,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2408458963600516548, guid: ec04450954fc5d44ea748e22e7825d61,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20844,11 +20854,6 @@ PrefabInstance:
       propertyPath: SprintEnergySlider
       value: 
       objectReference: {fileID: 21665802}
-    - target: {fileID: 2408458963600516549, guid: ec04450954fc5d44ea748e22e7825d61,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec04450954fc5d44ea748e22e7825d61, type: 3}
 --- !u!1 &1830785307 stripped
